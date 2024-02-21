@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: flowpay-interview
+      POSTGRES_PASSWORD: mysecretpassword #In production, I would use env variable for password, not hardcoded like this, but for local dev it should be ok.
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

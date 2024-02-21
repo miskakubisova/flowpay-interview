@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- ChangeSet for creating the companies table -->
+    <changeSet id="1" author="kubisova">
+        <createTable tableName="companies">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Primary key for the company record">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)" remarks="The name of the company">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet for creating the representatives table -->
+    <changeSet id="2" author="kubisova">
+        <createTable tableName="representatives">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Primary key for the representative record">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="firstname" type="varchar(255)" remarks="The first name of the representative">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="varchar(255)" remarks="The last name of the representative">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet for creating the join table company_representatives -->
+    <changeSet id="3" author="kubisova">
+        <createTable tableName="company_representatives">
+            <column name="company_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_company"
+                             referencedTableName="companies" referencedColumnNames="id"
+                             deleteCascade="true"/>
+            </column>
+            <column name="representative_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_representative"
+                             referencedTableName="representatives" referencedColumnNames="id"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="company_id, representative_id" tableName="company_representatives"/>
+    </changeSet>
+
+</databaseChangeLog>
